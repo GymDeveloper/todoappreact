@@ -1,5 +1,5 @@
 const FormAddTask = (props) => {
-  const { manejarInput, inputTask, agregar, refrescar } = props;
+  const { manejarInput, inputTask, agregar } = props;
 
   return (
     <div>
@@ -18,10 +18,6 @@ const FormAddTask = (props) => {
             <button className="btn btn-primary" onClick={agregar}>
               <span className="fa fa-plus"></span>
               &nbsp; Add
-            </button>
-            <button className="btn btn-outline-primary" onClick={refrescar}>
-              Refresh &nbsp;
-              <span className="fa fa-refresh"></span>
             </button>
           </div>
         </div>

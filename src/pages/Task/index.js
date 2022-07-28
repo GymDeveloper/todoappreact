@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import FormAddTask from "../../components/FormAddTask";
 import TaskListContainer from "../../components/TaskListContainer";
 import TodoApi from "../../services/todoapi";
@@ -27,6 +27,11 @@ const Task = () => {
     const data = await TodoApi.listtasks();
     setTasks(data.tasks);
   }
+
+  useEffect(() => {
+    // haremos el llamado a la funcion refrescar
+    refrescar();
+  }, []);
 
   return (
     <div className="container mt-5 mx-auto" style={{ width: 600 }}>

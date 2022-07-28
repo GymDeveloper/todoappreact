@@ -1,11 +1,11 @@
 import Task from "./pages/Task";
 
-function App() {
+const App = () => {
   return (
     <div>
       <Task />
     </div>
   );
-}
+};
 
 export default App;
