@@ -1,4 +1,6 @@
 import { useState, useRef } from "react";
+import FormAddTask from "./components/FormAddTask";
+import TaskListContainer from "./components/TaskListContainer";
 import TodoApi from "./services/todoapi";
 
 function App() {
@@ -28,19 +30,13 @@ function App() {
 
   return (
     <div className="container mt-5 mx-auto" style={{ width: 600 }}>
-      <div className="card mt-4">
-        {tasks.length > 0 ? (
-          <ul className="list-group list-group-flush">
-            {tasks.map((task, index) => (
-              <li key={index} className="list-group-item">
-                {task.text}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <h3 className="m-2">Sin tareas</h3>
-        )}
-      </div>
+      <FormAddTask
+        inputTask={inputTask}
+        agregar={agregar}
+        manejarInput={manejarInput}
+        refrescar={refrescar}
+      />
+      <TaskListContainer tasks={tasks} />
     </div>
   );
 }
