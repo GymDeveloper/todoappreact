@@ -1,7 +1,7 @@
 import Swal from "sweetalert2";
 import TodoApi from "../../services/todoapi";
 
-const TaskItem = ({ index, task, refrescar }) => {
+const TaskItem = ({ task, refrescar }) => {
   const checkTask = async () => {
     const response = await Swal.fire({
       title: `Estas seguro de marcar como terminado la tarea ${task.text}?`,
@@ -23,8 +23,32 @@ const TaskItem = ({ index, task, refrescar }) => {
     }
   };
 
+  const editTask = async () => {
+    const response = await Swal.fire({
+      title: "Editar",
+      input: "text",
+      inputValue: task.text,
+      showCancelButton: true,
+      inputValidator: (value) => {
+        if (!value) {
+          return "Escribe algo!";
+        }
+      },
+    });
+
+    console.log(response);
+    await TodoApi.updateTask(task.id, response.value);
+    await refrescar();
+  };
+
+  const bgStatus = {
+    todo: "bg-primary",
+    done: "bg-success",
+    delete: "bg-danger",
+  };
+
   return (
-    <li key={index} className="list-group-item">
+    <li className={`list-group-item ${bgStatus[task.status]} bg-opacity-25`}>
       <div className="row">
         <div className="col-md-8">{task.text}</div>
         {task.status !== "done" && (
@@ -33,7 +57,7 @@ const TaskItem = ({ index, task, refrescar }) => {
               <i className="fa fa-check"></i>
             </button>
             &nbsp;
-            <button className="btn btn-sm btn-warning">
+            <button onClick={editTask} className="btn btn-sm btn-warning">
               <i className="fa fa-edit"></i>
             </button>
             &nbsp;

@@ -6,7 +6,7 @@ const TaskListContainer = ({ tasks, refrescar }) => {
       {tasks.length > 0 ? (
         <ul className="list-group list-group-flush">
           {tasks.map((task, index) => (
-            <TaskItem index={index} task={task} refrescar={refrescar} />
+            <TaskItem key={index} task={task} refrescar={refrescar} />
           ))}
         </ul>
       ) : (
