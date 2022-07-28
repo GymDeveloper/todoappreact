@@ -1,12 +1,12 @@
 import TaskItem from "../TaskItem";
 
-const TaskListContainer = ({ tasks }) => {
+const TaskListContainer = ({ tasks, refrescar }) => {
   return (
     <div className="card mt-4">
       {tasks.length > 0 ? (
         <ul className="list-group list-group-flush">
           {tasks.map((task, index) => (
-            <TaskItem index={index} task={task} />
+            <TaskItem index={index} task={task} refrescar={refrescar} />
           ))}
         </ul>
       ) : (

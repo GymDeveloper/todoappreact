@@ -41,7 +41,7 @@ const Task = () => {
         manejarInput={manejarInput}
         refrescar={refrescar}
       />
-      <TaskListContainer tasks={tasks} />
+      <TaskListContainer tasks={tasks} refrescar={refrescar} />
     </div>
   );
 };
