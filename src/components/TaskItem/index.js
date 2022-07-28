@@ -3,13 +3,10 @@ import TodoApi from "../../services/todoapi";
 
 const TaskItem = ({ task, refrescar }) => {
   const checkTask = async () => {
-    const response = await Swal.fire({
-      title: `Estas seguro de marcar como terminado la tarea ${task.text}?`,
-      showDenyButton: true,
-      confirmButtonText: "Si",
-      denyButtonText: "No",
-    });
-    console.log(response);
+    const response = await showConfirmAlert(
+      `Estas seguro de marcar como terminado la tarea ${task.text}?`
+    );
+
     /**
      * Si marcamos que si el response.value = true
      * Si marcamos que no el response.value = false
@@ -36,9 +33,30 @@ const TaskItem = ({ task, refrescar }) => {
       },
     });
 
-    console.log(response);
     await TodoApi.updateTask(task.id, response.value);
     await refrescar();
+  };
+
+  const deleteTask = async () => {
+    const response = await showConfirmAlert(
+      `Estas seguro de eliminar la tarea ${task.text}?`
+    );
+
+    if (response.value) {
+      await TodoApi.deleteTask(task.id);
+      await refrescar();
+    }
+  };
+
+  const showConfirmAlert = async (title) => {
+    const response = await Swal.fire({
+      title,
+      showDenyButton: true,
+      confirmButtonText: "Si",
+      denyButtonText: "No",
+    });
+
+    return response;
   };
 
   const bgStatus = {
@@ -51,7 +69,7 @@ const TaskItem = ({ task, refrescar }) => {
     <li className={`list-group-item ${bgStatus[task.status]} bg-opacity-25`}>
       <div className="row">
         <div className="col-md-8">{task.text}</div>
-        {task.status !== "done" && (
+        {task.status === "todo" && (
           <div className="col-md-4">
             <button onClick={checkTask} className="btn btn-sm btn-success">
               <i className="fa fa-check"></i>
@@ -61,7 +79,7 @@ const TaskItem = ({ task, refrescar }) => {
               <i className="fa fa-edit"></i>
             </button>
             &nbsp;
-            <button className="btn btn-sm btn-danger">
+            <button onClick={deleteTask} className="btn btn-sm btn-danger">
               <i className="fa fa-trash"></i>
             </button>
           </div>
